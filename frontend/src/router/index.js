@@ -17,11 +17,11 @@ const routes = [
         name: 'detail/:id',
         component: () => import('@/pages/Detail.vue'),
     },
-    // {
-    //     path: '/product/:type*',
-    //     name: 'product.show',
-    //     component: () => import('@/pages/Product.vue'),
-    // },
+    {
+        path: '/product/:gender/:type*',
+        name: 'product.show',
+        component: () => import('@/pages/Product.vue'),
+    },
     {
         path: '/cart',
         name: 'cart',

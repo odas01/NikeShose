@@ -31,10 +31,10 @@ export default {
                         <div class="col col-md-5 d-flex align-items-center justify-content-center">
                             <user-switch-outlined />
                             <div class="d-flex flex-column align-items-center header__group-wrap">
-                                <router-link :to="{ name: 'register' }" class="header__group-login">
+                                <router-link :to="{ name: 'login' }" class="header__group-login">
                                     <span>Đăng nhập</span>
                                 </router-link>
-                                <router-link :to="{ name: 'login' }">
+                                <router-link :to="{ name: 'register' }">
                                     <span>Đăng ký</span>
                                 </router-link>
                             </div>

@@ -1,7 +1,6 @@
 <script>
 import Slider from '@/components/Slider.vue';
 import Card from '@/components/Card.vue';
-import ListCard from '@/components/ListCard.vue';
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination } from "swiper";
 
@@ -12,14 +11,11 @@ export default {
     components: {
         Slider,
         Card,
-        ListCard,
         Swiper,
         SwiperSlide,
     },
     data() {
         return {
-            titleMenWomen: ['Shop men\'s', 'Shop women\'s'],
-            titleChildren: ['Shop boy\'s', 'Shop girl\'s'],
             bestSeller: {
                 breakpoints: {
                     '640': {
@@ -36,9 +32,37 @@ export default {
                     },
                 },
                 images: ['thumb1.jpg', 'thumb1.jpg', 'thumb1.jpg', 'thumb1.jpg', 'thumb1.jpg', 'thumb1.jpg', 'thumb1.jpg', 'thumb1.jpg',]
+            },
+            products: [
+                {
+                    title: ['men', 'women'],
+                    banner: '/src/assets/image/banner/banner7.jpg',
+                    data: [1, 2, 3, 4, 5, 6, 7, 8, 8]
+                }
+                ,
+                {
+
+                    title: ['children'],
+                    banner: '/src/assets/image/banner/banner8.jpg',
+                    data: [1, 2, 3, 4, 5, 6, 7, 8]
+                }
+            ]
+        }
+    },
+    methods: {
+        titlee(title) {
+            switch (title) {
+                case 'men':
+                    return 'nam'
+                case 'women':
+                    return 'nữ'
+                default:
+                    return 'trẻ em';
             }
         }
-    }, setup() {
+    }
+    ,
+    setup() {
         return {
             modules: [Pagination],
         };
@@ -58,21 +82,35 @@ export default {
                 :breakpoints='bestSeller.breakpoints' :modules="modules" class="mySwiper">
                 <swiper-slide v-for="item in bestSeller.images">
                     <a href="">
-                        <img :src='"src/assets/imgage/product/" + item' alt="" />
+                        <img :src='"src/assets/image/product/" + item' alt="">
                     </a>
                 </swiper-slide>
             </swiper>
         </div>
     </div>
+
     <div class="banner mt-4">
         <div class="row">
             <div class="col col-md-12">
-                <img src="../assets/imgage/banner/banner5.jpg" alt="">
+                <img src="../assets/image/banner/banner5.jpg" alt="">
             </div>
         </div>
     </div>
-    <ListCard :title='titleMenWomen' :list='[1, 2, 3, 4, 5, 5, 6, 7]' banner="/src/assets/imgage/banner/banner7.jpg" />
-    <ListCard :title='titleChildren' :list='[1, 2, 3, 4, 5, 5, 6, 7]' banner="/src/assets/imgage/banner/banner8.jpg" />
+
+    <div class="list__card mt-4" v-for="product in products">
+        <div class="list__card-title d-flex justify-content-center mb-3">
+            <router-link v-for='title in product.title' :to='{name: "product.show", params:{gender: title}}'>
+                Shop {{
+                titlee(title)}}
+            </router-link>
+        </div>
+        <img :src='product.banner' alt="">
+        <div class="row gx-3 gy-3">
+            <div class="col col-md-2-5" v-for="itemData in product.data">
+                <Card />
+            </div>
+        </div>
+    </div>
 </template>
 
 <style lang='scss' scoped>
@@ -97,6 +135,27 @@ export default {
 
     &>div {
         margin-top: 36px;
+    }
+}
+
+.list__card {
+    &-title {
+        font-size: 24px;
+
+        & a {
+            color: unset;
+            font-size: 20px;
+            font-weight: 600;
+
+            &:hover {
+
+                color: #0984e3 !important;
+            }
+        }
+
+        &>*~* {
+            margin-left: 40px;
+        }
     }
 }
 </style>

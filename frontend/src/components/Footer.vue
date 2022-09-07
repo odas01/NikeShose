@@ -20,7 +20,7 @@ export default {
                         </h5>
 
                         <div class="footer__info footer__info-contact d-flex align-items-center">
-                            <img src="../assets/footer.png" alt="">
+                            <img src="../assets/image/footer/footer.png" alt="">
                             <span class="pl-3">Hợp tác với chúng tôi</span>
                         </div>
                     </div>
@@ -80,7 +80,7 @@ export default {
 @use '../scss/' as *;
 
 .footer {
-    background: url('../assets/footer-bg.jpg');
+    background: url('../assets/image/footer/footer-bg.jpg');
     padding: 20px 0 8px;
 
     &__info {

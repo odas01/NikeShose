@@ -12,6 +12,9 @@ export default {
         name: {
             type: String,
         },
+        gender: {
+            type: String,
+        },
         type: {
             type: String,
         },
@@ -25,22 +28,31 @@ export default {
     computed: {
         childrenStyle() {
             return !this.depth ? {} : { transform: `translateX(200px)` };
+        },
+        href() {
+            if (!this.gender) {
+                return { name: this.name }
+            }
+            else {
+                return { name: this.name, params: { gender: this.gender, type: this.type } }
+            }
         }
-    }
+    },
 }
 </script>
 
 <template>
     <div class="tree__menu">
-        <router-link v-if="title" :to='{ name: name }' class="tree__title">
+        <router-link v-if="title" :to='{ name: this.name, params: { gender: this.gender, type: this.type } }'
+            class="tree__title">
             <span class="tree__title-wrap">
                 {{ title }}
             </span>
             <right-outlined v-if="children" />
         </router-link>
         <ul v-if="children" class="tree__children" :style='childrenStyle' :class='{ root: !this.depth }'>
-            <tree-menu v-for="node in children" :title="node.title" :children="node.children" :depth="depth + 1"
-                :name='node.name'>
+            <tree-menu v-for="node in children" :title="node.title" :name='node.name' :children="node.children"
+                :gender='node.gender' :type='node.type' :depth="depth + 1">
             </tree-menu>
         </ul>
     </div>
@@ -71,6 +83,10 @@ export default {
         height: 100%;
         padding: 10px 0;
         border-bottom: solid 1px #e5e6ec;
+
+        &:hover {
+            color: #0984e3;
+        }
     }
 
     & .anticon {
@@ -86,9 +102,6 @@ export default {
         }
     }
 
-    &:hover {
-        color: red !important;
-    }
 }
 
 .tree__children {

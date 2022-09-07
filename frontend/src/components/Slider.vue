@@ -17,7 +17,7 @@ export default {
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" ref="carousel">
         <div class="carousel-inner">
             <div class="carousel-item " v-for="(banner, index) in banners" :class="{ active: index === 0 }">
-                <img class="d-block w-100" :src="`src/assets/imgage/banner/${banner}`" :alt="`Slide ${index + 1}`">
+                <img class="d-block w-100" :src="`src/assets/image/banner/${banner}`" :alt="`Slide ${index + 1}`">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"

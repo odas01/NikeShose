@@ -23,59 +23,105 @@ const navbars = [
 ]
 
 const categorys = {
-    name: '/',
     children: [
         {
-            name: 'cart',
+            name: 'product.show',
             title: 'Nam',
+            gender: 'men',
             children: [
                 {
-                    name: 'cart',
-                    title: 'Running',
+                    name: 'product.show',
+                    title: 'Chạy bộ',
+                    gender: 'men',
+                    type: 'running',
                 },
                 {
-                    name: 'cart',
-                    title: 'Football',
+                    name: 'product.show',
+                    title: 'Bóng đá',
+                    gender: 'men',
+                    type: 'football'
                 },
                 {
-                    name: 'cart',
-                    title: 'Basketball'
+                    name: 'product.show',
+                    title: 'Bóng chuyền',
+                    gender: 'men',
+                    type: 'basketball',
                 },
                 {
-                    name: 'cart',
+                    name: 'product.show',
+                    title: 'Tenis',
+                    gender: 'men',
+                    type: 'tenis',
+                },
+                {
+                    name: 'product.show',
                     title: 'Gym',
+                    gender: 'men',
+                    type: 'gym'
                 },
             ]
         },
         {
-            name: 'cart',
+            name: 'product.show',
             title: 'Nữ',
+            gender: 'women',
             children: [
                 {
-                    name: 'cart',
-                    title: 'Life style'
+                    name: 'product.show',
+                    title: 'Chạy bộ',
+                    gender: 'women',
+                    type: 'running',
                 },
                 {
-                    name: 'cart',
-                    title: 'Running'
+                    name: 'product.show',
+                    title: 'Bóng đá',
+                    gender: 'women',
+                    type: 'football'
                 },
                 {
-                    name: 'cart',
-                    title: 'Football'
+                    name: 'product.show',
+                    title: 'Bóng chuyền',
+                    gender: 'women',
+                    type: 'basketball',
                 },
                 {
-                    name: 'cart',
-                    title: 'Basketball'
+                    name: 'product.show',
+                    title: 'Tenis',
+                    gender: 'women',
+                    type: 'tenis',
                 },
                 {
-                    name: 'cart',
-                    title: 'Gym'
+                    name: 'product.show',
+                    title: 'Gym',
+                    gender: 'women',
+                    type: 'gym'
                 },
             ]
         },
         {
-            name: 'cart',
+            name: 'product.show',
             title: 'Trẻ em',
+            gender: 'boy',
+            children: [
+                {
+                    name: 'product.show',
+                    title: 'Chạy bộ',
+                    gender: 'children',
+                    type: 'running',
+                },
+                {
+                    name: 'product.show',
+                    title: 'Bóng đá',
+                    gender: 'children',
+                    type: 'football'
+                },
+                {
+                    name: 'product.show',
+                    title: 'Bóng chuyền',
+                    gender: 'children',
+                    type: 'basketball',
+                },
+            ]
         },
     ]
 }
