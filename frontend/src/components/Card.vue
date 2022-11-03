@@ -1,35 +1,33 @@
 <script>
-import { SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons-vue';
+import { SearchOutlined, ShoppingCartOutlined } from "@ant-design/icons-vue";
 export default {
+    props: {
+        data: {
+            type: Object,
+        },
+    },
     components: {
         SearchOutlined,
-        ShoppingCartOutlined
-    }
-}
+        ShoppingCartOutlined,
+    },
+};
 </script>
 
 <template>
-    <a href="/detail/111" class="card">
-        <img src="../assets/image/product/thumb1.jpg" alt="" class="card-img-top">
+    <router-link :to="{name:'detail', params: {id:data._id}}" class="card">
+        <img :src='"data:image/png;base64," + data.image' alt="" class="card-img-top">
         <div class="card-body">
-            <span class="card__name abc">NikeCourt Legacy</span>
-            <span class="card__price">2,189,000₫</span>
+            <span class="card__name">{{data.name}}</span>
+            <span class="card__price">{{new Intl.NumberFormat('de-DE').format(data.price)}}đ</span>
         </div>
-        <div class="card__icon">
-            <a href="/detail/111" class="card__icon-link">
-                <SearchOutlined />
-            </a>
-            <a href="/cart" class="card__icon-link">
-                <ShoppingCartOutlined />
-            </a>
-        </div>
-    </a>
+    </router-link>
 </template>
 
 <style lang='scss' scoped>
-@use '../scss/' as *;
+@use "../scss/" as *;
 
 .card {
+    height: 100%;
     border-color: transparent;
     transition: all 0.2s ease;
     cursor: pointer;
@@ -37,14 +35,21 @@ export default {
     position: relative;
     overflow: hidden;
     color: unset;
+    background-color: #f6f6f6;
+
+    &-img-top {
+        flex: 1;
+    }
 
     &-body {
+        @include flex();
+        flex-direction: column;
         position: relative;
+        height: 105px;
     }
 
     &__name {
         font-size: 14px;
-        font-weight: 500;
         color: $black-color;
         line-height: 18px;
         padding-top: 10px;
@@ -60,26 +65,8 @@ export default {
         font-weight: 600;
         font-size: 16px;
         margin-right: 10px;
-        margin-top: 10px;
+        margin-top: auto;
         transition: all 0.35s ease;
-    }
-
-    &__icon {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        opacity: 0;
-        transition: opacity 0.35s, transform 0.35s;
-
-        &>*~* {
-            margin-left: 20px;
-        }
-
-        &-link {
-            color: $white-color;
-        }
-
     }
 
     &::before {
@@ -88,10 +75,14 @@ export default {
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(to bottom, rgba(72, 76, 97, 0) 0%, rgba(72, 76, 97, 0.8) 75%);
-        content: '';
-        opacity: 0;
-        transform: translateY(50%);
+        background: linear-gradient(
+            to bottom,
+            rgba(72, 76, 97, 0) 0%,
+            rgb(119 164 152 / 80%) 75%
+        );
+        content: "";
+        opacity: 0.5;
+        transform: translateY(100%);
         transition: opacity 0.35s, transform 0.35s;
     }
 
@@ -104,10 +95,5 @@ export default {
         opacity: 1;
         transform: translateX(-50%);
     }
-
-    &:hover &-body {
-        position: unset;
-    }
-
 }
 </style>

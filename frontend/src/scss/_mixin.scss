@@ -1,7 +1,12 @@
-@mixin flex($align-items, $justify-content) {
+@mixin flex($align-items: initial, $justify-content: initial) {
     display: flex;
     align-items: $align-items;
     justify-content: $justify-content;
+}
+
+@mixin color($color: initial, $bgcolor: initial) {
+    color: $color;
+    background-color: $bgcolor;
 }
 
 @mixin overlay {

@@ -18,6 +18,22 @@ export default defineConfig({
                 target: 'http://localhost:3000/',
                 changeOrigin: true,
             },
+            '/categorys': {
+                target: 'http://localhost:3000/',
+                changeOrigin: true,
+            },
+            '/carts': {
+                target: 'http://localhost:3000/',
+                changeOrigin: true,
+            },
+            '/orders': {
+                target: 'http://localhost:3000/',
+                changeOrigin: true,
+            },
+            '/users': {
+                target: 'http://localhost:3000/',
+                changeOrigin: true,
+            },
         },
     },
 });

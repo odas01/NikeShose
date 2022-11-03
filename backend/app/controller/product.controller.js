@@ -1,81 +1,126 @@
-import ProductService from '../services/product.service.js';
-import MongoDB from '../utils/mongodb.util.js';
-import ApiError from '../api-error.js';
+import Product from '../model/Product.js';
+import Image from '../model/Image.js';
 
 export const create = async (req, res, next) => {
-    if (!req.body?.name) {
-        return next(new ApiError(400, 'Chưa nhập dữ liệu'));
+    if (req.body.image) {
+        req.body.image = Buffer.from(req.body.image, 'base64');
     }
-    try {
-        const productService = new ProductService(MongoDB.client);
-        const document = await productService.create(req.body);
-        return res.send(document);
-    } catch (error) {
-        return next(new ApiError(500, 'Error creating product'));
-    }
+    let otherImages = req.body.otherImages;
+    delete req.body.otherImages;
+
+    Product.create(req.body)
+        .then(async (product) => {
+            if (!!otherImages) {
+                const otherImagesId = await Promise.all(
+                    await otherImages.map(async (item) => {
+                        let id = '';
+                        await Image.create({
+                            productId:product._id,
+                            data: Buffer.from(item, 'base64'),
+                        }).then(async (res) => {
+                            id = res._id;
+                        });
+                        return id;
+                    })
+                );
+                await Product.updateOne({_id:product._id}, {otherImages: otherImagesId});
+            }
+            res.send({message: 'Create product successfully.'})
+        })
+        .catch((e) => res.send(e));
 };
 export const findAll = async (req, res, next) => {
-    let documents = [];
-    try {
-        const productService = new ProductService(MongoDB.client);
-        const { name } = req.body;
-        if (name) {
-            documents = await productService.findByName(name);
-        } else {
-            documents = await productService.find({});
-        }
-    } catch (error) {
-        return next(new ApiError(500, 'Error findall product'));
-    }
-    return res.send(documents);
+    const countDoc = await Product.countDocuments({});
+
+    Product.find({})
+        .sort({ _id: -1 })
+        .skip(+req.query.skip)
+        .limit(+req.query.limit)
+        // .populate('otherImages', 'data')
+        .then((products) =>
+            res.send({
+                products,
+                totalProducts: countDoc,
+            })
+        )
+        .catch((e) => res.send(e));
 };
 export const findOne = async (req, res, next) => {
-    try {
-        const productService = new ProductService(MongoDB.client);
-        const document = await productService.findById(req.params.id);
-        return document
-            ? res.send(document)
-            : next(new ApiError(500, 'product not found'));
-    } catch (error) {
-        return next(new ApiError(500, 'Error find product'));
-    }
+    Product.findOne({ _id: req.params.id })
+        .populate('otherImages', 'data')
+        .then((product) => res.send(product))
+        .catch((e) => res.send(e));
 };
 export const update = async (req, res, next) => {
-    if (Object.keys(req.body).length === 0) {
-        return next(new ApiError(400, 'Chưa nhập dữ liệu'));
+    if (req.body.image) {
+        req.body.image = Buffer.from(req.body.image, 'base64');
     }
-    try {
-        const productService = new ProductService(MongoDB.client);
-        const document = await productService.update(req.params.id, req.body);
-        return document
-            ? res.send(document)
-            : next(new ApiError(500, 'product not found'));
-    } catch (error) {
-        return next(new ApiError(500, 'Error find product'));
+    if (req.body.otherImages) {
+        const otherImages = req.body.otherImages.map(
+            (item) => Buffer.from(item, 'base64')
+        );
+        const otherImagesIds = await Promise.all(
+            await otherImages.map(async (thumbnail) => {
+                let id = '';
+                await Image.create({
+                    productId: req.params.id,
+                    data: thumbnail,
+                }).then(async (res) => {
+                    id = res._id;
+                });
+                return id;
+            })
+        );
+        req.body.otherImages = [...otherImagesIds];
     }
+
+    Product.updateOne({ _id: req.params.id }, req.body)
+        .then((message) => {
+            res.send({ message: 123 });
+        })
+        .catch((e) => res.send(e));
 };
 export const deletee = async (req, res) => {
-    try {
-        const productService = new ProductService(MongoDB.client);
-        const document = await productService.delete(req.params.id);
-        return document
-            ? res.send(document)
-            : next(new ApiError(500, 'product not found'));
-    } catch (error) {
-        return next(new ApiError(500, 'Error find product'));
-    }
+    await Image.deleteMany({productId: req.params.id})
+    Product.deleteOne({ _id: req.params.id })
+        .then((message) => res.send(message))
+        .catch((e) => res.send(e));
 };
 export const deleteAll = async (req, res, next) => {
-    try {
-        const productService = new ProductService(MongoDB.client);
-        const document = await productService.deleteAll();
-        return document
-            ? res.send(document)
-            : next(new ApiError(500, 'product not found'));
-    } catch (error) {
-        return next(new ApiError(500, 'Error find product'));
-    }
+    Product.deleteMany({})
+        .then((message) => res.send(message))
+        .catch((e) => res.send(e));
 };
-export const findAllFavorite = (req, res) => {
-    res.send({ message: 'findAllFavorite handler' });
+export const search = async (req, res, next) => {
+    const filter = {
+        name: { $regex: new RegExp(req.query.name), $options: 'i' },
+    };
+    if (req.query.open) {
+        filter.open = req.query.open;
+    }
+    Product.find(filter)
+        .then((products) => res.send({ products }))
+        .catch((e) => res.send(e));
+};
+export const filter = async (req, res, next) => {
+    const countDoc = await Product.countDocuments({
+        ...res.locals.filter,
+        open: true,
+    });
+
+    Product.find({
+        ...res.locals.filter,
+        open: true,
+    })
+        .limit(res.locals.limit)
+        .skip(res.locals.skip)
+        .sort(res.locals.sort)
+        .then((products) => {
+            res.send({
+                data: products,
+                quantity: countDoc,
+                last_page: Math.ceil(countDoc / res.locals.limit),
+            });
+        })
+        .catch((e) => res.send(e));
 };

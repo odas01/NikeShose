@@ -4,8 +4,8 @@ class ProductService {
         this.api = createApiClient(baseUrl);
     }
 
-    async getAll() {
-        return (await this.api.get('/')).data;
+    async getAll(skip = 0, limit = 0) {
+        return (await this.api.get('/', { params: { skip, limit } })).data;
     }
 
     async create(data) {
@@ -26,6 +26,15 @@ class ProductService {
 
     async delete(id) {
         return (await this.api.delete(`/${id}`)).data;
+    }
+
+    async search(query) {
+        return (await this.api.get(`/search`, { params: query })).data;
+    }
+
+    async filter(filter) {
+        const params = filter;
+        return (await this.api.get(`/filter`, { params })).data;
     }
 }
 export default new ProductService();

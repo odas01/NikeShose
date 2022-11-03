@@ -1,9 +1,9 @@
 <script>
-import { RightOutlined } from '@ant-design/icons-vue';
+import { RightOutlined } from "@ant-design/icons-vue";
 
 export default {
     components: {
-        RightOutlined
+        RightOutlined,
     },
     props: {
         title: {
@@ -12,38 +12,31 @@ export default {
         name: {
             type: String,
         },
-        gender: {
-            type: String,
-        },
         type: {
             type: String,
         },
+        category: {
+            type: String,
+        },
         children: {
-            type: Array
+            type: Array,
         },
         depth: {
-            type: Number
-        }
+            type: Number,
+        },
     },
     computed: {
         childrenStyle() {
             return !this.depth ? {} : { transform: `translateX(200px)` };
         },
-        href() {
-            if (!this.gender) {
-                return { name: this.name }
-            }
-            else {
-                return { name: this.name, params: { gender: this.gender, type: this.type } }
-            }
-        }
     },
-}
+};
 </script>
 
 <template>
     <div class="tree__menu">
-        <router-link v-if="title" :to='{ name: this.name, params: { gender: this.gender, type: this.type } }'
+        <router-link v-if="title"
+            :to='{ name: this.name, params: { type: this.type, category: this.category ? this.category : "all" } }'
             class="tree__title">
             <span class="tree__title-wrap">
                 {{ title }}
@@ -52,7 +45,7 @@ export default {
         </router-link>
         <ul v-if="children" class="tree__children" :style='childrenStyle' :class='{ root: !this.depth }'>
             <tree-menu v-for="node in children" :title="node.title" :name='node.name' :children="node.children"
-                :gender='node.gender' :type='node.type' :depth="depth + 1">
+                :type='node.type' :category='node.category' :depth="depth + 1">
             </tree-menu>
         </ul>
     </div>
@@ -60,15 +53,14 @@ export default {
 </template>
 
 <style lang='scss'>
-@use '../scss/' as *;
+@use "../scss/" as *;
 
 .tree__menu {
     position: relative;
 
-    &:hover>.tree__children {
+    &:hover > .tree__children {
         display: block;
     }
-
 }
 
 .tree__title {
@@ -77,16 +69,13 @@ export default {
     padding: 0 10px;
     width: 100%;
     color: unset;
+    text-transform: capitalize;
 
     &-wrap {
         width: 100%;
         height: 100%;
         padding: 10px 0;
         border-bottom: solid 1px #e5e6ec;
-
-        &:hover {
-            color: #0984e3;
-        }
     }
 
     & .anticon {
@@ -96,12 +85,14 @@ export default {
         transform: translateY(-50%);
 
         & svg {
-
             width: 0.6rem !important;
             height: 0.6rem !important;
         }
     }
 
+    &:hover {
+        background-color: #f5f5f5;
+    }
 }
 
 .tree__children {
@@ -127,10 +118,8 @@ export default {
 
         transform: perspective(600px) rotateX(-90deg);
         transform-origin: 0% 0%;
-        transition: transform 0.5s ease,
-            opacity 0.6s ease,
-            max-height 0.6s step-end,
-            max-width 0.6s step-end,
+        transition: transform 0.5s ease, opacity 0.6s ease,
+            max-height 0.6s step-end, max-width 0.6s step-end,
             padding 0.6s step-end;
     }
 }

@@ -1,90 +1,93 @@
 <script>
-import { PhoneOutlined } from '@ant-design/icons-vue';
+import { PhoneOutlined } from "@ant-design/icons-vue";
+import { Row, Col } from "ant-design-vue";
 
 export default {
     components: {
         PhoneOutlined,
-    }
-}
+        Row,
+        Col,
+    },
+};
 </script>
 
 <template>
-    <div class="footer">
+   <div class="footer">
+    <div class="container">
+        <Row :gutter="16">
+            <Col :span='8'>
+                <div class="footer__list">
+                    <h5 class="footer__title footer__logo">
+                        <img src="https://file.hstatic.net/200000525917/file/logo-scofield-while_2d1f4117bd8d4867acc370cb4b35e531.png" alt="" />
+                    </h5>
+
+                    <div class="footer__info footer__info-contact d-flex align-items-center">
+                        <img src="../assets/image/footer/footer.png" alt="" />
+                        <span class="ps-3">Cooperate with us</span>
+                    </div>
+                </div>
+            </Col>
+            <Col :span='8'>
+                <div class="footer__list">
+                    <h5 class="footer__title">Introduce</h5>
+                    <div class="footer__info">
+                        <span>
+                            Khu II, đường 3/2, phường Xuân Khánh, quận Ninh Kiều, thành phố Cần Thơ, Việt Nam
+                            <br />
+                        </span>
+                        <span>
+                            <!-- <phone-outlined /> -->
+                            0123789456
+                            <br />
+                        </span>
+                        <span>
+                            lntthanh3317@gmail.com
+                            <br />
+                        </span>
+                    </div>
+                </div>
+            </Col>
+            <Col :span='8'>
+                <div class="footer__list">
+                    <h5 class="footer__title">Support</h5>
+                    <div class="footer__info">
+                        <span>
+                            Submit a warranty claim
+                            <br />
+                        </span>
+                        <span>
+                            Submit a return request
+                            <br />
+                        </span>
+                        <span>
+                            Customer support: lntthanh3317@gmail.com
+                        </span>
+                    </div>
+                </div>
+            </Col>
+        </Row>
+    </div>
+
+    <div class="footer__coppyright">
         <div class="container">
-            <div class="row ">
-                <div class="col col-md-4">
-                    <div class="footer__list">
-                        <h5 class="footer__title footer__logo">
-                            <img src="https://file.hstatic.net/200000525917/file/logo-scofield-while_2d1f4117bd8d4867acc370cb4b35e531.png"
-                                alt="">
-                        </h5>
-
-                        <div class="footer__info footer__info-contact d-flex align-items-center">
-                            <img src="../assets/image/footer/footer.png" alt="">
-                            <span class="pl-3">Hợp tác với chúng tôi</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col col-md-4">
-                    <div class="footer__list">
-                        <h5 class="footer__title">Giới thiệu</h5>
-                        <div class="footer__info">
-                            <span> Khu II, đường 3/2, phường Xuân Khánh, quận Ninh Kiều, thành phố Cần Thơ,
-                                Việt
-                                Nam
-                                <br />
-                            </span>
-                            <span>
-                                <!-- <phone-outlined /> -->
-                                0123789456
-                                <br />
-                            </span>
-                            <span>
-                                lntthanh3317@gmail.com
-                                <br />
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col col-md-4">
-                    <div class="footer__list">
-                        <h5 class="footer__title">HỖ TRỢ KHÁCH HÀNG</h5>
-                        <div class="footer__info">
-                            <span> Gửi yêu cầu bảo hành
-                                <br />
-                            </span>
-                            <span>
-                                Gửi yêu cầu đổi trả
-                                <br />
-                            </span>
-                            <span>
-                                P. Hỗ trợ khách hàng: lntthanh3317@gmail.com
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="footer__coppyright">
-            <div class="container">
-                <span>
-                    © Copyright 2022 By lntthanh3317
-                </span>
-            </div>
+            <span>
+                © Copyright 2022 By lntthanh3317
+            </span>
         </div>
     </div>
+</div>
+
 </template>
 
 <style lang='scss' scoped>
-@use '../scss/' as *;
+@use "../scss/" as *;
 
 .footer {
-    background: url('../assets/image/footer/footer-bg.jpg');
+    margin-top: auto;
+    background: url("../assets/image/footer/footer-bg.jpg");
     padding: 20px 0 8px;
 
     &__info {
-
         &-contact {
             margin-top: 20px;
             width: fit-content;

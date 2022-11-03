@@ -1,17 +1,21 @@
 <script>
-import { Carousel } from 'bootstrap'
+import { Carousel } from "bootstrap";
 export default {
     data() {
         return {
-            banners: ['banner1.jpg', 'banner2.jpg', 'banner3.jpg', 'banner4.jpg']
-        }
+            banners: [
+                "banner1.jpg",
+                "banner2.jpg",
+                "banner3.jpg",
+                "banner4.jpg",
+            ],
+        };
     },
     mounted() {
-        new Carousel(this.$refs.carousel)
-    }
-}
+        new Carousel(this.$refs.carousel);
+    },
+};
 </script>
-
 
 <template>
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" ref="carousel">
@@ -34,7 +38,7 @@ export default {
 </template>
 
 <style lang='scss'>
-@use '../scss/' as *;
+@use "../scss/" as *;
 
 .carousel {
     & img {

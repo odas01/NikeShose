@@ -1,130 +1,130 @@
 <script>
-import { DownOutlined } from '@ant-design/icons-vue';
-import TreeMenu from './TreeMenu.vue';
+import { DownOutlined } from "@ant-design/icons-vue";
+import TreeMenu from "./TreeMenu.vue";
 
 const navbars = [
     {
-        name: 'home',
-        title: 'Trang chủ'
+        name: "home",
+        title: "Home",
     },
     {
-        name: 'home',
-        title: 'Danh mục',
-        isCategory: true
+        name: "home",
+        title: "Category",
+        isCategory: true,
     },
+    // {
+    //     name: "introduce",
+    //     title: "Introduce",
+    // },
     {
-        name: 'introduce',
-        title: 'Giới thiệu'
+        name: "contact",
+        title: "Contact",
     },
-    {
-        name: 'contact',
-        title: 'Liên hệ'
-    }
-]
+];
 
 const categorys = {
     children: [
         {
-            name: 'product.show',
-            title: 'Nam',
-            gender: 'men',
+            name: "category.show",
+            title: "men",
+            type: "men",
             children: [
                 {
-                    name: 'product.show',
-                    title: 'Chạy bộ',
-                    gender: 'men',
-                    type: 'running',
+                    name: "category.show",
+                    title: "running",
+                    type: "men",
+                    category: "running",
                 },
                 {
-                    name: 'product.show',
-                    title: 'Bóng đá',
-                    gender: 'men',
-                    type: 'football'
+                    name: "category.show",
+                    title: "football",
+                    type: "men",
+                    category: "football",
                 },
                 {
-                    name: 'product.show',
-                    title: 'Bóng chuyền',
-                    gender: 'men',
-                    type: 'basketball',
+                    name: "category.show",
+                    title: "basketball",
+                    type: "men",
+                    category: "basketball",
                 },
                 {
-                    name: 'product.show',
-                    title: 'Tenis',
-                    gender: 'men',
-                    type: 'tenis',
+                    name: "category.show",
+                    title: "Tennis",
+                    type: "men",
+                    category: "tennis",
                 },
                 {
-                    name: 'product.show',
-                    title: 'Gym',
-                    gender: 'men',
-                    type: 'gym'
+                    name: "category.show",
+                    title: "Gym",
+                    type: "men",
+                    category: "gym",
                 },
-            ]
+            ],
         },
         {
-            name: 'product.show',
-            title: 'Nữ',
-            gender: 'women',
+            name: "category.show",
+            title: "women",
+            type: "women",
             children: [
                 {
-                    name: 'product.show',
-                    title: 'Chạy bộ',
-                    gender: 'women',
-                    type: 'running',
+                    name: "category.show",
+                    title: "running",
+                    type: "women",
+                    category: "running",
                 },
                 {
-                    name: 'product.show',
-                    title: 'Bóng đá',
-                    gender: 'women',
-                    type: 'football'
+                    name: "category.show",
+                    title: "football",
+                    type: "women",
+                    category: "football",
                 },
                 {
-                    name: 'product.show',
-                    title: 'Bóng chuyền',
-                    gender: 'women',
-                    type: 'basketball',
+                    name: "category.show",
+                    title: "basketball",
+                    type: "women",
+                    category: "basketball",
                 },
                 {
-                    name: 'product.show',
-                    title: 'Tenis',
-                    gender: 'women',
-                    type: 'tenis',
+                    name: "category.show",
+                    title: "Tennis",
+                    type: "women",
+                    category: "tennis",
                 },
                 {
-                    name: 'product.show',
-                    title: 'Gym',
-                    gender: 'women',
-                    type: 'gym'
+                    name: "category.show",
+                    title: "Gym",
+                    type: "women",
+                    category: "gym",
                 },
-            ]
+            ],
         },
         {
-            name: 'product.show',
-            title: 'Trẻ em',
-            gender: 'boy',
+            name: "category.show",
+            title: "kid",
+            type: "kid",
             children: [
                 {
-                    name: 'product.show',
-                    title: 'Chạy bộ',
-                    gender: 'children',
-                    type: 'running',
+                    name: "category.show",
+                    title: "running",
+                    type: "kid",
+                    category: "running",
                 },
                 {
-                    name: 'product.show',
-                    title: 'Bóng đá',
-                    gender: 'children',
-                    type: 'football'
+                    name: "category.show",
+                    title: "football",
+                    type: "kid",
+                    category: "football",
                 },
                 {
-                    name: 'product.show',
-                    title: 'Bóng chuyền',
-                    gender: 'children',
-                    type: 'basketball',
+                    name: "category.show",
+                    title: "basketball",
+                    type: "kid",
+                    category: "basketball",
                 },
-            ]
+            ],
         },
-    ]
-}
+    ],
+};
 
 export default {
     components: {
@@ -136,14 +136,14 @@ export default {
         return {
             navbars,
             categorys,
-        }
-    }
-}
+        };
+    },
+};
 </script>
 
 <template>
     <div class="navbar d-flex justify-content-center">
-        <router-link :to="{ name: navbar.name }" class="navbar__item " v-for="navbar in navbars"
+        <router-link :to="{ name: navbar.name}" class="navbar__item " v-for="navbar in navbars"
             :class='{ has__children: navbar.isCategory }'>
             {{ navbar.title }}
 
@@ -155,33 +155,29 @@ export default {
 </template>
 
 <style lang='scss' >
-@use '../scss/' as *;
+@use "../scss/" as *;
 
 .navbar {
-    margin-top: 8px;
-
     &__item {
         position: relative;
         font-size: 18px;
-        font-weight: 500;
         color: unset;
 
         &:not(.has__children)::before {
             content: "";
             position: absolute;
-            bottom: -8px;
+            bottom: -10px;
             left: 0;
             width: 100%;
-            height: 3px;
-            background-color: $black-color;
+            height: 2px;
+            background-color: #959595;
             border-radius: 100rem;
             opacity: 0;
             visibility: hidden;
             transition: all 0.15s linear;
         }
 
-        &:hover::before,
-        &.router-link-active::before {
+        &.router-link-exact-active::before {
             opacity: 1;
             visibility: visible;
         }
@@ -196,8 +192,7 @@ export default {
             left: 0;
         }
 
-
-        &.has__children:hover>.tree__menu>.tree__children.root {
+        &.has__children:hover > .tree__menu > .tree__children.root {
             overflow: visible;
             opacity: 1;
             max-height: 3000px;
@@ -207,14 +202,19 @@ export default {
             -ms-transform: perspective(600px) rotateX(0deg);
             -o-transform: perspective(600px) rotateX(0deg);
             transform: perspective(600px) rotateX(0deg);
-            -webkit-transition: -webkit-transform 0.5s ease, opacity 0.2s ease, max-height 0s step-end, max-width 0s step-end, padding 0s step-end;
-            -o-transition: -o-transform 0.5s ease, opacity 0.2s ease, max-height 0s step-end, max-width 0s step-end, padding 0s step-end;
-            transition: transform 0.5s ease, opacity 0.2s ease, max-height 0s step-end, max-width 0s step-end, padding 0s step-end;
+            -webkit-transition: -webkit-transform 0.5s ease, opacity 0.2s ease,
+                max-height 0s step-end, max-width 0s step-end,
+                padding 0s step-end;
+            -o-transition: -o-transform 0.5s ease, opacity 0.2s ease,
+                max-height 0s step-end, max-width 0s step-end,
+                padding 0s step-end;
+            transition: transform 0.5s ease, opacity 0.2s ease,
+                max-height 0s step-end, max-width 0s step-end,
+                padding 0s step-end;
         }
-
     }
 
-    &>*~* {
+    & > * ~ * {
         margin-left: 28px;
     }
 }
